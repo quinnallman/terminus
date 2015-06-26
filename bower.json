@@ -1,0 +1,19 @@
+{
+  "name": "terminus",
+  "version": "0.0.1",
+  "homepage": "https://github.com/quinnallman/terminus",
+  "authors": [
+    "Greg Roberts <groberts@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
