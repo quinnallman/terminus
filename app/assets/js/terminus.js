@@ -1,4 +1,6 @@
-var terminusApp = angular.module('terminusApp', []);
+var terminusApp = angular.module('terminusApp', [
+  '720kb.tooltips'
+]);
 
 terminusApp
   .factory('gameFactory', function() {
