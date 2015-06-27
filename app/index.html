@@ -20,8 +20,7 @@
   <body ng-controller="gameController">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <h1>Terminus</h1>
+        <div class="col-md-12" ng-include="'header.html'">
         </div>
       </div>
       <div class="row">
@@ -33,112 +32,7 @@
           </ul>
 
           <div class="tab-content">
-            <div role="tab-player" class="tab-pane active" id="player">
-              <div class="row">
-                <div class="col-md-4 equipment-pane">
-                  <div class="row">
-                    <div class="col-md-2">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="equipment-slot">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="equipment-slot">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="equipment-slot">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="equipment-slot">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="equipment-slot">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="equipment-slot">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="equipment-slot">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="equipment-slot">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-8">
-                      <div></div>
-                    </div>
-                    <div class="col-md-2">
-                      <div class="row">
-                        <div class="col-md-12 equipment-slot">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 equipment-slot">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 equipment-slot">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 equipment-slot">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 equipment-slot">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 equipment-slot">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 equipment-slot">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 equipment-slot">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-2 col-md-offset-4">
-                      <div class="equipment-slot" id="equipment-right">
-                      </div>
-                    </div>
-                    <div class="col-md-2">
-                      <div class="equipment-slot" id="equipment-left">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-8 inventory-pane">
-                </div>
-              </div>
+            <div role="tab-player" class="tab-pane active" id="player" ng-include="'player.html'">
             </div>
             <div role="tab-map" class="tab-pane" id="map">
               <h1>Map</h1>
@@ -150,8 +44,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <p>&copy; 2015 Greg Roberts</p>
+        <div class="col-md-12" ng-include="'footer.html'">
         </div>
       </div>
     </div>

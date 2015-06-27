@@ -56,5 +56,14 @@ terminusApp
     };
 
     $scope.init();
-  }]);
+  }])
 
+  .directive('item', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        item: '='
+      },
+      templateUrl: 'item.html'
+    };
+  });
