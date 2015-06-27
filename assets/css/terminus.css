@@ -1,5 +1,7 @@
 .equipment-pane {
   background-color: black;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .equipment-slot {

@@ -1,45 +1,25 @@
-$(document).ready(function() {
-  var game = {
-    ITEMTYPE_SWORD: 1,
-    ITEMTYPE_SIELD: 2,
+var terminusApp = angular.module('terminusApp', []);
 
-    ITEMSLOT_RIGHT: 1,
-    ITEMSLOT_LEFT: 2,
+terminusApp
+  .factory('gameFactory', function() {
+    var gameFactory = {};
 
-    ITEMQUALITY_POOR: 1,
-    ITEMQUALITY_AVERAGE: 2,
-    ITEMQUALITY_GOOD: 3,
-    ITEMQUALITY_SUPERIOR: 4,
-    ITEMQUALITY_EXCELLENT: 5,
+    gameFactory.ITEMTYPE_SWORD = 1;
+    gameFactory.ITEMTYPE_SHIELD = 2;
 
-    player: {},
+    gameFactory.ITEMSLOT_RIGHT = 1;
+    gameFactory.ITEMSLOT_LEFT = 2;
 
-    createRandomItem: function(ilvl) {
-      return {};
-    },
+    gameFactory.ITEMQUALITY_POOR = 1;
 
-    redraw: function() {
-      var img_base = '/assets/img/';
-      var icon_url;
-
-      // draw the right slot
-      icon_url = img_base + game.player.equipment.right.icon;
-      $('#equipment-right').html('<img src="' + icon_url + '" alt="equipment icon">');
-
-      icon_url = img_base + game.player.equipment.left.icon;
-      $('#equipment-left').html('<img src="' + icon_url + '" alt="equipment icon">');
-
-      console.debug('redraw complete');
-    },
-
-    init: function() {
-      game.player = {
+    gameFactory.createNewPlayer = function() {
+      return {
         equipment: {
           right: {
             name: "Training Sword",
-            type: game.ITEMTYPE_SWORD,
-            slot: game.ITEMSLOT_RIGHT + game.ITEMSLOT_LEFT,
-            quality: game.ITEMQUALITY_POOR,
+            type: gameFactory.ITEMTYPE_SWORD,
+            slot: gameFactory.ITEMSLOT_RIGHT + gameFactory.ITEMSLOT_LEFT,
+            quality: gameFactory.ITEMQUALITY_POOR,
             stats: {
               minDamage: 1,
               maxDamage: 2,
@@ -49,9 +29,9 @@ $(document).ready(function() {
           },
           left: {
             name: "Training Shield",
-            type: game.ITEMTYPE_SHIELD,
-            slot: game.ITEMSLOT_RIGHT + game.ITEMSLOT_LEFT,
-            quality: game.ITEMQUALITY_POOR,
+            type: gameFactory.ITEMTYPE_SHIELD,
+            slot: gameFactory.ITEMSLOT_RIGHT + gameFactory.ITEMSLOT_LEFT,
+            quality: gameFactory.ITEMQUALITY_POOR,
             stats: {
               ac: 1
             },
@@ -60,12 +40,21 @@ $(document).ready(function() {
         },
         inventory: []
       };
-    }
-  };
+    };
 
-  game.init();
-  game.redraw();
+    gameFactory.createRandomItem = function(ilvl) {
+      return {};
+    };
 
-  console.debug(game.player);
-});
+    return gameFactory;
+  })
+
+  .controller('gameController', ['$scope', 'gameFactory', function($scope, gameFactory) {
+    $scope.init = function() {
+      $scope.player = gameFactory.createNewPlayer();
+      console.debug($scope.player);
+    };
+
+    $scope.init();
+  }]);
 

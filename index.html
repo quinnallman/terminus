@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="terminusApp" ng-strict-di>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +17,7 @@
     <link href="assets/css/terminus.css" rel="stylesheet">
   </head>
 
-  <body>
+  <body ng-controller="gameController">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -35,31 +35,43 @@
           <div class="tab-content">
             <div role="tab-player" class="tab-pane active" id="player">
               <div class="row">
-                <div class="col-md-6 equipment-pane">
+                <div class="col-md-4 equipment-pane">
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <div class="row">
-                        <div class="col-md-12 equipment-slot">
+                        <div class="col-md-12">
+                          <div class="equipment-slot">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12 equipment-slot">
+                        <div class="col-md-12">
+                          <div class="equipment-slot">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12 equipment-slot">
+                        <div class="col-md-12">
+                          <div class="equipment-slot">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12 equipment-slot">
+                        <div class="col-md-12">
+                          <div class="equipment-slot">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12 equipment-slot">
+                        <div class="col-md-12">
+                          <div class="equipment-slot">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12 equipment-slot">
+                        <div class="col-md-12">
+                          <div class="equipment-slot">
+                          </div>
                         </div>
                       </div>
                       <div class="row">
@@ -75,10 +87,10 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                       <div></div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <div class="row">
                         <div class="col-md-12 equipment-slot">
                         </div>
@@ -114,17 +126,17 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-1 col-md-offset-5">
+                    <div class="col-md-2 col-md-offset-4">
                       <div class="equipment-slot" id="equipment-right">
                       </div>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                       <div class="equipment-slot" id="equipment-left">
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 inventory-pane">
+                <div class="col-md-8 inventory-pane">
                 </div>
               </div>
             </div>
@@ -146,6 +158,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
     <script src="assets/js/terminus.js"></script>
   </body>
 </html>
