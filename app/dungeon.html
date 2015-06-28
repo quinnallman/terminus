@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <button class="btn btn-primary start-combat" ng-click="startCombat()">Find something to kill</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="dungeon-you">
+      <h1>You</h1>
+      <div class="progress">
+        <div class="progress-bar" ng-class="{'progress-bar-success': player.stats.current_hp / player.stats.max_hp > 0.5}" role="progressbar" aria-valuenow="{{player.stats.current_hp}}" aria-valuemin="0" aria-valuemax="{{player.stats.max_hp}}" style="width: {{player.stats.current_hp / player.stats.max_hp * 100}}%">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-md-offset-6">
+    <div class="dungeon-enemy" ng-if="enemy">
+      <h1>Enemy</h1>
+      <div class="progress">
+        <div class="progress-bar" ng-class="{'progress-bar-success': enemy.current_hp / enemy.max_hp > 0.5}" role="progressbar" aria-valuenow="{{enemy.current_hp}}" aria-valuemin="0" aria-valuemax="{{enemy.max_hp}}" style="width: {{enemy.current_hp / enemy.max_hp * 100}}%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -16,6 +16,21 @@ terminusApp
 
     GameService.createNewPlayer = function() {
       var player = {
+        name: '',
+        level: 1,
+        xp: 0,
+        stats: {
+          max_hp: 100,
+          current_hp: 100,
+          max_mp: 100,
+          current_mp: 100,
+          str: 10,
+          agi: 10,
+          dex: 10,
+          wis: 10,
+          int: 10,
+          sta: 10
+        },
         equipment: {
           right: {
             name: "Training Sword",
@@ -49,6 +64,16 @@ terminusApp
       return player;
     };
 
+    GameService.createEnemy = function(level) {
+      var enemy = {
+        level: level,
+        max_hp: 100 * level,
+        current_hp: 100 * level
+      };
+
+      return enemy;
+    };
+
     GameService.createRandomItem = function(ilvl) {
       return {};
     };
@@ -77,7 +102,12 @@ terminusApp
   .controller('gameController', ['$scope', 'GameService', function($scope, GameService) {
     $scope.init = function() {
       $scope.player = GameService.createNewPlayer();
-      console.debug($scope.player);
+      $scope.enemy = {};
+    };
+
+    $scope.startCombat = function() {
+      $scope.enemy = GameService.createEnemy($scope.player.level);
+      console.debug($scope.enemy);
     };
 
     $scope.init();
