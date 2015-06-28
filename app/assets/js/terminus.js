@@ -3,25 +3,25 @@ var terminusApp = angular.module('terminusApp', [
 ]);
 
 terminusApp
-  .factory('gameFactory', function() {
-    var gameFactory = {};
+  .factory('GameService', function() {
+    var GameService = {};
 
-    gameFactory.ITEMTYPE_SWORD = 1;
-    gameFactory.ITEMTYPE_SHIELD = 2;
+    GameService.ITEMTYPE_SWORD = 1;
+    GameService.ITEMTYPE_SHIELD = 2;
 
-    gameFactory.ITEMSLOT_RIGHT = 1;
-    gameFactory.ITEMSLOT_LEFT = 2;
+    GameService.ITEMSLOT_RIGHT = 1;
+    GameService.ITEMSLOT_LEFT = 2;
 
-    gameFactory.ITEMQUALITY_POOR = 1;
+    GameService.ITEMQUALITY_POOR = 1;
 
-    gameFactory.createNewPlayer = function() {
-      return {
+    GameService.createNewPlayer = function() {
+      var player = {
         equipment: {
           right: {
             name: "Training Sword",
-            type: gameFactory.ITEMTYPE_SWORD,
-            slot: gameFactory.ITEMSLOT_RIGHT + gameFactory.ITEMSLOT_LEFT,
-            quality: gameFactory.ITEMQUALITY_POOR,
+            type: GameService.ITEMTYPE_SWORD,
+            slot: GameService.ITEMSLOT_RIGHT + GameService.ITEMSLOT_LEFT,
+            quality: GameService.ITEMQUALITY_POOR,
             stats: {
               minDamage: 1,
               maxDamage: 2,
@@ -31,9 +31,9 @@ terminusApp
           },
           left: {
             name: "Training Shield",
-            type: gameFactory.ITEMTYPE_SHIELD,
-            slot: gameFactory.ITEMSLOT_RIGHT + gameFactory.ITEMSLOT_LEFT,
-            quality: gameFactory.ITEMQUALITY_POOR,
+            type: GameService.ITEMTYPE_SHIELD,
+            slot: GameService.ITEMSLOT_RIGHT + GameService.ITEMSLOT_LEFT,
+            quality: GameService.ITEMQUALITY_POOR,
             stats: {
               ac: 1
             },
@@ -42,18 +42,41 @@ terminusApp
         },
         inventory: []
       };
+
+      player.equipment.right.tooltip = GameService.getTooltip(player.equipment.right);
+      player.equipment.left.tooltip = GameService.getTooltip(player.equipment.left);
+
+      return player;
     };
 
-    gameFactory.createRandomItem = function(ilvl) {
+    GameService.createRandomItem = function(ilvl) {
       return {};
     };
 
-    return gameFactory;
+    GameService.getTooltip = function(item) {
+      var html = "";
+
+      switch(item.type) {
+        case GameService.ITEMTYPE_SWORD:
+          html += '<div class="item-tooltip-damage">' + item.stats.minDamage + ' - ' + item.stats.maxDamage + ' damage</div>';
+          html += '<div class="item-tooltip-speed">Speed: ' + item.stats.speed + '</div>';
+          break;
+        case GameService.ITEMTYPE_SHIELD:
+          html += '<div class="item-tooltip-armor">AC: ' + item.stats.ac + '</div>';
+          break;
+        default:
+          break;
+      }
+
+      return html;
+    };
+
+    return GameService;
   })
 
-  .controller('gameController', ['$scope', 'gameFactory', function($scope, gameFactory) {
+  .controller('gameController', ['$scope', 'GameService', function($scope, GameService) {
     $scope.init = function() {
-      $scope.player = gameFactory.createNewPlayer();
+      $scope.player = GameService.createNewPlayer();
       console.debug($scope.player);
     };
 
@@ -64,8 +87,8 @@ terminusApp
     return {
       restrict: 'E',
       scope: {
-        item: '='
+        item: '=',
       },
-      templateUrl: 'item.html'
+      templateUrl: 'item.html',
     };
   });
