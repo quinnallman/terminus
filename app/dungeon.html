@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="col-md-3 col-md-offset-6">
-    <div class="dungeon-enemy" ng-if="enemy">
+    <div class="dungeon-enemy" ng-if="enemy.level">
       <h1>Enemy</h1>
       <div class="progress">
         <div class="progress-bar" ng-class="{'progress-bar-success': enemy.current_hp / enemy.max_hp > 0.5}" role="progressbar" aria-valuenow="{{enemy.current_hp}}" aria-valuemin="0" aria-valuemax="{{enemy.max_hp}}" style="width: {{enemy.current_hp / enemy.max_hp * 100}}%">

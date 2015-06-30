@@ -14,6 +14,10 @@ terminusApp
 
     GameService.ITEMQUALITY_POOR = 1;
 
+    GameService.isWeapon = function(item) {
+      return item.type == GameService.ITEMTYPE_SWORD;
+    };
+
     GameService.createNewPlayer = function() {
       var player = {
         name: '',
@@ -78,6 +82,12 @@ terminusApp
       return {};
     };
 
+    // returns a random int between min (inclusive) and max (inclusive)
+    GameService.rand = function(min, max) {
+      max += 1;
+      return Math.floor(Math.random() * (max - min)) + min;
+    };
+
     GameService.getTooltip = function(item) {
       var html = "";
 
@@ -99,15 +109,63 @@ terminusApp
     return GameService;
   })
 
-  .controller('gameController', ['$scope', 'GameService', function($scope, GameService) {
+  .controller('gameController', ['$scope', '$timeout', 'GameService', function($scope, $timeout, GameService) {
     $scope.init = function() {
       $scope.player = GameService.createNewPlayer();
       $scope.enemy = {};
     };
 
+    $scope.playerSwingRight = function() {
+      // base weapon damage
+      var damage = GameService.rand($scope.player.equipment.right.stats.minDamage, $scope.player.equipment.right.stats.maxDamage);
+
+      // additional strength-based damage
+      damage += $scope.player.stats.str / 10;
+
+      // crit chance
+      if(GameService.rand(1, 100) > 75) {
+        damage *= 1.5;
+      }
+
+      $scope.enemy.current_hp -= damage;
+
+      console.debug('player did ' + damage + ' damage');
+      $timeout($scope.playerSwingRight, 1000 * $scope.player.equipment.right.stats.speed);
+    };
+
+    $scope.playerSwingLeft = function() {
+      // base weapon damage
+      var damage = GameService.rand($scope.player.equipment.left.stats.minDamage, $scope.player.equipment.left.stats.maxDamage);
+
+      // additional strength-based damage
+      damage += $scope.player.stats.str / 10;
+
+      // crit chance
+      if(GameService.rand(1, 100) > 75) {
+        damage *= 1.5;
+      }
+
+      // off-hand damage penalty
+      damage *= 0.75;
+
+      $scope.enemy.current_hp -= damage;
+
+      console.debug('player did ' + damage + ' damage');
+      $timeout($scope.playerSwingLeft, 1000 * $scope.player.equipment.left.stats.speed);
+    };
+
+    $scope.enemySwing = function() {
+    };
+
     $scope.startCombat = function() {
       $scope.enemy = GameService.createEnemy($scope.player.level);
-      console.debug($scope.enemy);
+
+      if(GameService.isWeapon($scope.player.equipment.right)) {
+        $timeout($scope.playerSwingRight, 100);
+      }
+      if(GameService.isWeapon($scope.player.equipment.left)) {
+        $timeout($scope.playerSwingLeft, 100);
+      }
     };
 
     $scope.init();
