@@ -239,7 +239,7 @@ terminusApp
         return;
       }
 
-      var damage = $scope.enemy.level;
+      var damage = GameService.rand(1, $scope.enemy.level * 10);
 
       $scope.player.stats.current_hp -= damage;
 
