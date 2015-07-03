@@ -24,6 +24,10 @@ terminusApp
       return Math.round(xp);
     };
 
+    GameService.getEarnedXP = function(enemy) {
+      return 30;
+    };
+
     GameService.createNewPlayer = function() {
       var player = {
         name: '',
@@ -138,8 +142,22 @@ terminusApp
       $scope.timers.enemy = {};
     }
 
+    $scope.levelUp = function() {
+      $scope.player.level++;
+      $scope.player.xp_to_level = GameService.getXPForLevel($scope.player.level + 1);
+      console.debug('You have gained a level! You are now level ' + $scope.player.level);
+    };
+
     $scope.killEnemy = function() {
       console.debug('You have slain your enemy!');
+
+      var xp_earned = GameService.getEarnedXP($scope.enemy);
+      $scope.player.xp += xp_earned;
+      console.debug('You gain ' + xp_earned + ' experience');
+
+      while($scope.player.xp >= $scope.player.xp_to_level) {
+        $scope.levelUp();
+      }
 
       $timeout($scope.oocRegen);
     };
