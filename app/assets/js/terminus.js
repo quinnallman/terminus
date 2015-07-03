@@ -42,8 +42,8 @@ terminusApp
             slot: GameService.ITEMSLOT_RIGHT + GameService.ITEMSLOT_LEFT,
             quality: GameService.ITEMQUALITY_POOR,
             stats: {
-              minDamage: 1,
-              maxDamage: 2,
+              minDamage: 5,
+              maxDamage: 10,
               speed: 2
             },
             icon: 'sword.png'
