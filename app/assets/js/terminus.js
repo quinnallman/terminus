@@ -133,10 +133,27 @@ terminusApp
 
     $scope.killEnemy = function() {
       console.debug('You have slain your enemy!');
+
+      $timeout($scope.oocRegen);
     };
 
     $scope.killPlayer = function() {
       console.debug('You have died!');
+
+      $timeout($scope.oocRegen);
+    };
+
+    $scope.oocRegen = function() {
+      if($scope.inBattle) {
+        $scope.timers.heal = {};
+        return;
+      }
+
+      var heal_amount = $scope.player.stats.max_hp / 10;
+
+      $scope.player.stats.current_hp += heal_amount;
+
+      $scope.timers.heal = $timeout($scope.oocRegen, 1000);
     };
 
     $scope.playerSwingRight = function() {
