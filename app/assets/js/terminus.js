@@ -8,11 +8,31 @@ terminusApp
 
     GameService.ITEMTYPE_SWORD = 1;
     GameService.ITEMTYPE_SHIELD = 2;
+    GameService.ITEMTYPE_ARMOUR = 3;
 
-    GameService.ITEMSLOT_RIGHT = 1;
-    GameService.ITEMSLOT_LEFT = 2;
+    GameService.ITEMSLOT_HEAD = 1;
+    GameService.ITEMSLOT_NECK = 2;
+    GameService.ITEMSLOT_SHOULDERS = 3;
+    GameService.ITEMSLOT_CHEST = 4;
+    GameService.ITEMSLOT_BACK = 5;
+    GameService.ITEMSLOT_WRIST = 6;
+    GameService.ITEMSLOT_RIGHT = 7;
+    GameService.ITEMSLOT_LEFT = 8;
+    GameService.ITEMSLOT_HANDS = 9;
+    GameService.ITEMSLOT_WAIST = 10;
+    GameService.ITEMSLOT_LEGS = 11;
+    GameService.ITEMSLOT_FEET = 12;
+    GameService.ITEMSLOT_RING1 = 13;
+    GameService.ITEMSLOT_RING2 = 14;
+    GameService.ITEMSLOT_TRINKET1 = 15;
+    GameService.ITEMSLOT_TRINKET2 = 16;
 
     GameService.ITEMQUALITY_POOR = 1;
+    GameService.ITEMQUALITY_NORMAL = 2;
+    GameService.ITEMQUALITY_UNCOMMON = 3;
+    GameService.ITEMQUALITY_RARE = 4;
+    GameService.ITEMQUALITY_EPIC = 5;
+    GameService.ITEMQUALITY_LEGENDARY = 6;
 
     GameService.isWeapon = function(item) {
       return item.type == GameService.ITEMTYPE_SWORD;
@@ -47,6 +67,26 @@ terminusApp
           sta: 10
         },
         equipment: {
+          chest: {
+            name: "Training Tunic",
+            type: GameService.ITEMTYPE_ARMOUR,
+            slot: GameService.ITEMSLOT_CHEST,
+            quality: GameService.ITEMQUALITY_POOR,
+            stats: {
+              ac: 1
+            },
+            icon: 'chest.png'
+          },
+          legs: {
+            name: "Training Pants",
+            type: GameService.ITEMTYPE_ARMOUR,
+            slot: GameService.ITEMSLOT_LEGS,
+            quality: GameService.ITEMQUALITY_POOR,
+            stats: {
+              ac: 1
+            },
+            icon: "legs.png"
+          },
           right: {
             name: "Training Sword",
             type: GameService.ITEMTYPE_SWORD,
@@ -73,6 +113,8 @@ terminusApp
         inventory: []
       };
 
+      player.equipment.chest.tooltip = GameService.getTooltip(player.equipment.chest);
+      player.equipment.legs.tooltip = GameService.getTooltip(player.equipment.legs);
       player.equipment.right.tooltip = GameService.getTooltip(player.equipment.right);
       player.equipment.left.tooltip = GameService.getTooltip(player.equipment.left);
 
@@ -108,6 +150,7 @@ terminusApp
           html += '<div class="item-tooltip-speed">Speed: ' + item.stats.speed + '</div>';
           break;
         case GameService.ITEMTYPE_SHIELD:
+        case GameService.ITEMTYPE_ARMOUR:
           html += '<div class="item-tooltip-armor">AC: ' + item.stats.ac + '</div>';
           break;
         default:
