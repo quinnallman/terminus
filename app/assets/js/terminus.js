@@ -113,9 +113,40 @@ terminusApp
     $scope.init = function() {
       $scope.player = GameService.createNewPlayer();
       $scope.enemy = {};
+
+      $scope.inBattle = false;
+      $scope.timers = {
+        right: {},
+        left: {},
+        enemy: {}
+      };
+    };
+
+    $scope.stopSwingTimers = function() {
+      $timeout.cancel($scope.timers.right);
+      $timeout.cancel($scope.timers.left);
+      $timeout.cancel($scope.timers.enemy);
+      $scope.timers.right = {};
+      $scope.timers.left = {};
+      $scope.timers.enemy = {};
+    }
+
+    $scope.killEnemy = function() {
+      console.debug('You have slain your enemy!');
+    };
+
+    $scope.killPlayer = function() {
+      console.debug('You have died!');
     };
 
     $scope.playerSwingRight = function() {
+      if(!$scope.inBattle) {
+        $scope.stopSwingTimers();
+        return;
+      }
+
+      var crit = false;
+
       // base weapon damage
       var damage = GameService.rand($scope.player.equipment.right.stats.minDamage, $scope.player.equipment.right.stats.maxDamage);
 
@@ -124,16 +155,35 @@ terminusApp
 
       // crit chance
       if(GameService.rand(1, 100) > 75) {
+        crit = true;
         damage *= 1.5;
       }
 
       $scope.enemy.current_hp -= damage;
 
-      console.debug('player did ' + damage + ' damage');
-      $timeout($scope.playerSwingRight, 1000 * $scope.player.equipment.right.stats.speed);
+      if(crit) {
+        console.debug('player did ' + damage + ' critical damage');
+      } else {
+        console.debug('player did ' + damage + ' damage');
+      }
+
+      if($scope.enemy.current_hp <= 0) {
+        $scope.inBattle = false;
+        $scope.stopSwingTimers();
+        $scope.killEnemy();
+      } else {
+        $scope.timers.right = $timeout($scope.playerSwingRight, 1000 * $scope.player.equipment.right.stats.speed);
+      }
     };
 
     $scope.playerSwingLeft = function() {
+      if(!$scope.inBattle) {
+        $scope.stopSwingTimers();
+        return;
+      }
+
+      var crit = false;
+
       // base weapon damage
       var damage = GameService.rand($scope.player.equipment.left.stats.minDamage, $scope.player.equipment.left.stats.maxDamage);
 
@@ -142,6 +192,7 @@ terminusApp
 
       // crit chance
       if(GameService.rand(1, 100) > 75) {
+        crit = true;
         damage *= 1.5;
       }
 
@@ -150,22 +201,55 @@ terminusApp
 
       $scope.enemy.current_hp -= damage;
 
-      console.debug('player did ' + damage + ' damage');
-      $timeout($scope.playerSwingLeft, 1000 * $scope.player.equipment.left.stats.speed);
+      if(crit) {
+        console.debug('player did ' + damage + ' critical off-hand damage');
+      } else {
+        console.debug('player did ' + damage + ' off-hand damage');
+      }
+
+      if($scope.enemy.current_hp <= 0) {
+        $scope.inBattle = false;
+        $scope.stopSwingTimers();
+        $scope.killEnemy();
+      } else {
+        $scope.timers.left = $timeout($scope.playerSwingLeft, 1000 * $scope.player.equipment.left.stats.speed);
+      }
     };
 
     $scope.enemySwing = function() {
+      if(!$scope.inBattle) {
+        $scope.stopSwingTimers();
+        return;
+      }
+
+      var damage = $scope.enemy.level;
+
+      $scope.player.stats.current_hp -= damage;
+
+      console.debug('enemy did ' + damage + ' damage');
+
+      if($scope.player.stats.current_hp <= 0) {
+        $scope.inBattle = false;
+        $scope.stopSwingTimers();
+        $scope.killPlayer();
+      } else {
+        $scope.timers.enemy = $timeout($scope.enemySwing, 2000 - $scope.enemy.level * 10);
+      }
     };
 
     $scope.startCombat = function() {
       $scope.enemy = GameService.createEnemy($scope.player.level);
 
+      $scope.inBattle = true;
+
       if(GameService.isWeapon($scope.player.equipment.right)) {
-        $timeout($scope.playerSwingRight, 100);
+        $scope.timers.right = $timeout($scope.playerSwingRight, 100);
       }
       if(GameService.isWeapon($scope.player.equipment.left)) {
-        $timeout($scope.playerSwingLeft, 100);
+        $scope.timers.left = $timeout($scope.playerSwingLeft, 100);
       }
+
+      $scope.timers.enemy = $timeout($scope.enemySwing, 100);
     };
 
     $scope.init();
