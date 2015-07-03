@@ -18,10 +18,17 @@ terminusApp
       return item.type == GameService.ITEMTYPE_SWORD;
     };
 
+    GameService.getXPForLevel = function(level) {
+      level--;
+      var xp = Math.pow(level * 1.2, 1.5) * 110;
+      return Math.round(xp);
+    };
+
     GameService.createNewPlayer = function() {
       var player = {
         name: '',
         level: 1,
+        xp_to_level: GameService.getXPForLevel(2),
         xp: 0,
         stats: {
           max_hp: 100,
