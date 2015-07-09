@@ -267,7 +267,7 @@ terminusApp
     };
 
     $scope.oocRegen = function() {
-      if($scope.inBattle) {
+      if($scope.inBattle || $scope.player.stats.current_hp == $scope.player.stats.max_hp) {
         $scope.timers.heal = {};
         return;
       }
@@ -275,8 +275,11 @@ terminusApp
       var heal_amount = $scope.player.stats.max_hp / 10;
 
       $scope.player.stats.current_hp += heal_amount;
-
-      $scope.timers.heal = $timeout($scope.oocRegen, 1000);
+      if($scope.player.stats.current_hp >= $scope.player.stats.max_hp) {
+        $scope.player.stats.current_hp = $scope.player.stats.max_hp;
+      } else {
+        $scope.timers.heal = $timeout($scope.oocRegen, 1000);
+      }
     };
 
     $scope.playerSwingRight = function() {
