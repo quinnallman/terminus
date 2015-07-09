@@ -1,0 +1,30 @@
+.equipment-pane {
+  background-color: black;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.equipment-slot {
+  width: 50px;
+  height: 50px;
+  border: 1px solid white;
+  background-color: red;
+}
+
+.equipment-slots-right .equipment-slot {
+  margin-left: -15px;
+}
+
+.equipment-slot img {
+  width: 50px;
+  height: 50px;
+}
+
+.inventory-item {
+  border: 1px solid black;
+}
+
+.start-combat {
+  width: 100%;
+}
+
