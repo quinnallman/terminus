@@ -14,7 +14,12 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3 col-md-offset-6">
+  <div class="col-md-6 combat-log">
+    <div class="combat-log-entry" ng-repeat="line in combatlog track by $index">
+      {{line}}
+    </div>
+  </div>
+  <div class="col-md-3">
     <div class="dungeon-enemy" ng-if="enemy.level">
       <h1>Enemy</h1>
       <div class="progress">

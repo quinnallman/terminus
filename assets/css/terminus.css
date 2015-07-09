@@ -20,6 +20,11 @@
   height: 50px;
 }
 
+.inventory-slot img {
+  width: 50px;
+  height: 50px;
+}
+
 .inventory-item {
   border: 1px solid black;
 }

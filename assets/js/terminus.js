@@ -222,6 +222,8 @@ terminusApp
         left: {},
         enemy: {}
       };
+
+      $scope.combatlog = [];
     };
 
     $scope.stopSwingTimers = function() {
@@ -236,20 +238,20 @@ terminusApp
     $scope.levelUp = function() {
       $scope.player.level++;
       $scope.player.xp_to_level = GameService.getXPForLevel($scope.player.level + 1);
-      console.debug('You have gained a level! You are now level ' + $scope.player.level);
+      $scope.combatlog.push('You have gained a level! You are now level ' + $scope.player.level);
     };
 
     $scope.killEnemy = function() {
-      console.debug('You have slain your enemy!');
+      $scope.combatlog.push('You have slain your enemy!');
 
       var loot = GameService.createRandomItem($scope.enemy.level);
-      player.inventory.push(loot);
-      console.debug('You looted:');
-      console.debug(loot);
+      $scope.player.inventory.push(loot);
+      $scope.combatlog.push('You looted:');
+      $scope.combatlog.push(loot);
 
       var xp_earned = GameService.getEarnedXP($scope.enemy);
       $scope.player.xp += xp_earned;
-      console.debug('You gain ' + xp_earned + ' experience');
+      $scope.combatlog.push('You gain ' + xp_earned + ' experience');
 
       while($scope.player.xp >= $scope.player.xp_to_level) {
         $scope.levelUp();
@@ -259,7 +261,7 @@ terminusApp
     };
 
     $scope.killPlayer = function() {
-      console.debug('You have died!');
+      $scope.combatlog.push('You have died!');
 
       $timeout($scope.oocRegen);
     };
@@ -300,9 +302,9 @@ terminusApp
       $scope.enemy.current_hp -= damage;
 
       if(crit) {
-        console.debug('player did ' + damage + ' critical damage');
+        $scope.combatlog.push('player did ' + damage + ' critical damage');
       } else {
-        console.debug('player did ' + damage + ' damage');
+        $scope.combatlog.push('player did ' + damage + ' damage');
       }
 
       if($scope.enemy.current_hp <= 0) {
@@ -340,9 +342,9 @@ terminusApp
       $scope.enemy.current_hp -= damage;
 
       if(crit) {
-        console.debug('player did ' + damage + ' critical off-hand damage');
+        $scope.combatlog.push('player did ' + damage + ' critical off-hand damage');
       } else {
-        console.debug('player did ' + damage + ' off-hand damage');
+        $scope.combatlog.push('player did ' + damage + ' off-hand damage');
       }
 
       if($scope.enemy.current_hp <= 0) {
@@ -364,7 +366,7 @@ terminusApp
 
       $scope.player.stats.current_hp -= damage;
 
-      console.debug('enemy did ' + damage + ' damage');
+      $scope.combatlog.push('enemy did ' + damage + ' damage');
 
       if($scope.player.stats.current_hp <= 0) {
         $scope.inBattle = false;
