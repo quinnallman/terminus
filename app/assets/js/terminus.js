@@ -385,6 +385,8 @@ terminusApp
 
       $scope.inBattle = true;
 
+      $scope.combatlog = [];
+
       if(GameService.isWeapon($scope.player.equipment.right)) {
         $scope.timers.right = $timeout($scope.playerSwingRight, 100);
       }
