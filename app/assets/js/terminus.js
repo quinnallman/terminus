@@ -243,9 +243,9 @@ terminusApp
       console.debug('You have slain your enemy!');
 
       var loot = GameService.createRandomItem($scope.enemy.level);
-      player.inventory.push(loot);
       console.debug('You looted:');
       console.debug(loot);
+      $scope.player.inventory.push(loot);
 
       var xp_earned = GameService.getEarnedXP($scope.enemy);
       $scope.player.xp += xp_earned;

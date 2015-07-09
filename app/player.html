@@ -110,6 +110,11 @@
     </div>
   </div>
   <div class="col-md-8 inventory-pane">
+    <div class="row">
+      <div class="col-md-2 inventory-slot" ng-repeat="item in player.inventory track by $index">
+        <item item="item" />
+      </div>
+    </div>
   </div>
 </div>
 
