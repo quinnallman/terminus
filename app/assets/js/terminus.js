@@ -121,8 +121,17 @@ terminusApp
       return player;
     };
 
+    GameService.adjectives = ['A Hulking', 'An Ugly', 'A Grotesque', 'A Giant', 'An Eyeless'];
+    GameService.nouns = ['Giant', 'Orc', 'Prime Minister', 'Voter', 'Guard', 'Cyclops'];
+
+    GameService.getRandomEnemyName = function() {
+      var name = GameService.adjectives[GameService.rand(0, GameService.adjectives.length - 1)] + " " + GameService.nouns[GameService.rand(0, GameService.nouns.length - 1)];
+      return name;
+    };
+
     GameService.createEnemy = function(level) {
       var enemy = {
+        name: GameService.getRandomEnemyName(),
         level: level,
         max_hp: 100 * level,
         current_hp: 100 * level
@@ -386,6 +395,8 @@ terminusApp
       $scope.inBattle = true;
 
       $scope.combatlog = [];
+
+      $scope.combatlog.push('You have encountered ' + $scope.enemy.name);
 
       if(GameService.isWeapon($scope.player.equipment.right)) {
         $scope.timers.right = $timeout($scope.playerSwingRight, 100);
