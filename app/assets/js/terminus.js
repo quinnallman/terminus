@@ -140,14 +140,22 @@ terminusApp
       };
 
       switch(type) {
-        case ITEMTYPE_SWORD:
+        case GameService.ITEMTYPE_SWORD:
           item.name = "Random Sword";
           item.slot = GameService.ITEMSLOT_RIGHT + GameService.ITEMSLOT_LEFT;
+          item.icon = 'sword.png';
+          item.stats.minDamage = GameService.rand(ilvl, 10*ilvl);
+          item.stats.maxDamage = GameService.rand(item.stats.minDamage, 20*ilvl);
+          var speed = GameService.rand(16, 33);
+          item.stats.speed = speed / 10;
           break;
         default:
           item.name = "Random Unknown";
           break;
       }
+
+      item.tooltip = GameService.getTooltip(item);
+      return item;
     };
 
     GameService.createRandomItem = function(ilvl) {
@@ -233,6 +241,11 @@ terminusApp
 
     $scope.killEnemy = function() {
       console.debug('You have slain your enemy!');
+
+      var loot = GameService.createRandomItem($scope.enemy.level);
+      player.inventory.push(loot);
+      console.debug('You looted:');
+      console.debug(loot);
 
       var xp_earned = GameService.getEarnedXP($scope.enemy);
       $scope.player.xp += xp_earned;
