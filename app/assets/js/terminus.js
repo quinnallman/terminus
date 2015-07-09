@@ -131,8 +131,50 @@ terminusApp
       return enemy;
     };
 
+    GameService.createItem = function(type, quality, ilvl) {
+      var item = {
+        type: type,
+        quality: quality,
+        stats: {
+        }
+      };
+
+      switch(type) {
+        case ITEMTYPE_SWORD:
+          item.name = "Random Sword";
+          item.slot = GameService.ITEMSLOT_RIGHT + GameService.ITEMSLOT_LEFT;
+          break;
+        default:
+          item.name = "Random Unknown";
+          break;
+      }
+    };
+
     GameService.createRandomItem = function(ilvl) {
-      return {};
+      // 1 = sword
+      // 2 = shield
+      var type = GameService.rand(1, 1);
+
+      // 1000 = legendary
+      // 995+ = epic
+      // 975+ = rare
+      // 900+ = uncommon
+      // 500+ = normal
+      // <500 = poor
+      var quality = GameService.rand(1, 1000);
+      if(quality > 999) {
+        return GameService.createItem(type, GameService.ITEMQUALITY_LEGENDARY, ilvl);
+      } else if(quality > 995) {
+        return GameService.createItem(type, GameService.ITEMQUALITY_EPIC, ilvl);
+      } else if(quality > 975) {
+        return GameService.createItem(type, GameService.ITEMQUALITY_RARE, ilvl);
+      } else if(quality > 900) {
+        return GameService.createItem(type, GameService.ITEMQUALITY_UNCOMMON, ilvl);
+      } else if(quality > 500) {
+        return GameService.createItem(type, GameService.ITEMQUALITY_NORMAL, ilvl);
+      } else {
+        return GameService.createItem(type, GameService.ITEMQUALITY_POOR, ilvl);
+      }
     };
 
     // returns a random int between min (inclusive) and max (inclusive)
@@ -152,8 +194,6 @@ terminusApp
         case GameService.ITEMTYPE_SHIELD:
         case GameService.ITEMTYPE_ARMOUR:
           html += '<div class="item-tooltip-armor">AC: ' + item.stats.ac + '</div>';
-          break;
-        default:
           break;
       }
 
