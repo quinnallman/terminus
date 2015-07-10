@@ -1,5 +1,6 @@
 var terminusApp = angular.module('terminusApp', [
-  '720kb.tooltips'
+  '720kb.tooltips',
+  'ngDragDrop'
 ]);
 
 terminusApp
