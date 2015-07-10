@@ -16,7 +16,6 @@
   "dependencies": {
     "bootstrap": "~3.3.5",
     "angular": "~1.4.1",
-    "angular-tooltips": "~0.1.13",
-    "angular-dragdrop": "~1.0.11"
+    "angular-tooltips": "~0.1.13"
   }
 }
